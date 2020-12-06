@@ -9,11 +9,20 @@ class App extends Component {
     filter: "",
   };
 
+  addToAppState = (stateForm) => {
+    this.setState((prevState) => {
+      return { contacts: [...prevState.contacts, stateForm] };
+    });
+  };
+
   render() {
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm handlerInput={this.handlerInput} />
+        <ContactForm
+          handlerInput={this.handlerInput}
+          addToAppState={this.addToAppState}
+        />
 
         <h2>Contacts</h2>
         {/* <Filter /> */}

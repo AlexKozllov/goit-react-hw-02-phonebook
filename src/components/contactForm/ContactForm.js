@@ -8,21 +8,20 @@ class ContactForm extends Component {
   state = {
     name: "",
     number: "",
-    contacts: [],
   };
 
   handleInput = (e) => {
     const { name, value } = e.target;
-
     this.setState({
       [name]: value,
+      id: uuidv4(),
     });
   };
 
   landleSubmit = (e) => {
     e.preventDefault();
-    const { name, number } = this.state;
-    const { onAdd } = this.props;
+    const { addToAppState } = this.props;
+    addToAppState(this.state);
   };
 
   render() {
@@ -35,7 +34,7 @@ class ContactForm extends Component {
             type="text"
             name="name"
             value={name}
-            onChange={this.handlerInput}
+            onChange={this.handleInput}
           ></input>
         </label>
         <label>
@@ -44,7 +43,7 @@ class ContactForm extends Component {
             type="tel"
             name="number"
             value={number}
-            onChange={this.handlerInput}
+            onChange={this.handleInput}
           ></input>
         </label>
         <button type="submit">Add contact</button>
