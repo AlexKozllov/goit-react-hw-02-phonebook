@@ -4,11 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 
 // uuidv4();
 
+const InitialState = { name: "", number: "" };
 class ContactForm extends Component {
-  state = {
-    name: "",
-    number: "",
-  };
+  state = InitialState;
 
   handleInput = (e) => {
     const { name, value } = e.target;
@@ -18,16 +16,29 @@ class ContactForm extends Component {
     });
   };
 
-  landleSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { addContacts } = this.props;
+    const isValidateForm = this.validateForm();
+    if (!isValidateForm) return;
     addContacts(this.state);
+    this.setState(InitialState);
+  };
+
+  validateForm = () => {
+    const { onCheckUnique } = this.props;
+    const { name, number } = this.state;
+    if (!name || !number) {
+      alert("Some filed is empty");
+      return false;
+    }
+    return onCheckUnique(name);
   };
 
   render() {
     const { name, number } = this.state;
     return (
-      <Form onSubmit={this.landleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <label>
           Name
           <input

@@ -27,6 +27,23 @@ class App extends Component {
     );
   };
 
+  hendleBtnDelete = (itemId) => {
+    this.setState((prevState) => {
+      return {
+        contacts: prevState.contacts.filter((item) => item.id !== itemId),
+      };
+    });
+  };
+
+  onCheckUnique = (name) => {
+    const { contacts } = this.state;
+    const isExistContact = !!contacts.find(
+      (item) => item.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+    );
+    isExistContact && alert("Contact is already exist");
+    return !isExistContact;
+  };
+
   render() {
     const { filter, contacts } = this.state;
     const visibleContacts = this.getVisibleContacts();
@@ -36,6 +53,7 @@ class App extends Component {
         <ContactForm
           handlerInput={this.handlerInput}
           addContacts={this.addContacts}
+          onCheckUnique={this.onCheckUnique}
         />
 
         <h2>Contacts</h2>
@@ -44,7 +62,10 @@ class App extends Component {
         )}
 
         {visibleContacts.length > 0 && (
-          <ContactList listContacts={visibleContacts} />
+          <ContactList
+            listContacts={visibleContacts}
+            hendleBtnDelete={this.hendleBtnDelete}
+          />
         )}
       </div>
     );
