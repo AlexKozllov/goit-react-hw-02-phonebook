@@ -20,8 +20,8 @@ class ContactForm extends Component {
 
   landleSubmit = (e) => {
     e.preventDefault();
-    const { addToAppState } = this.props;
-    addToAppState(this.state);
+    const { addContacts } = this.props;
+    addContacts(this.state);
   };
 
   render() {
