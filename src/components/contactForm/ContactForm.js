@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-// uuidv4();
-
 const InitialState = { name: "", number: "" };
 class ContactForm extends Component {
   state = InitialState;
@@ -12,16 +10,16 @@ class ContactForm extends Component {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
-      id: uuidv4(),
     });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { addContacts } = this.props;
+    const { name, number } = this.state;
     const isValidateForm = this.validateForm();
     if (!isValidateForm) return;
-    addContacts(this.state);
+    addContacts({ id: uuidv4(), name, number });
     this.setState(InitialState);
   };
 
